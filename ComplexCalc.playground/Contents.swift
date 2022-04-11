@@ -1,8 +1,77 @@
+import Darwin
 print("Welcome back to the UW Calculator")
 
 // Your job is to fill out Calculator so all the expressions
 // below both compile and return "true"
 class Calculator {
+    
+    func add(lhs l: Int, rhs r: Int) -> Int {
+        return l + r
+    }
+    
+    func add(_ arr: [Int]) -> Int {
+        return arr.reduce(0, +)
+    }
+    
+    func add(lhs l: (Int, Int), rhs r: (Int, Int)) -> (Int, Int) {
+        return (l.0 + r.0, l.1 + r.1)
+    }
+    
+    func add(lhs l: [String: Int], rhs r: [String: Int]) -> [String: Int] {
+        var result: [String: Int] = [:]
+        for (key, val) in l {
+            result[key] = val + r[key]!
+        }
+        return result
+    }
+    
+    func subtract(lhs l: Int, rhs r: Int) -> Int {
+        return l - r
+    }
+    
+    func subtract(lhs l: (Int, Int), rhs r: (Int, Int)) -> (Int, Int) {
+        return (l.0 - r.0, l.1 - r.1)
+    }
+    
+    func subtract(lhs l: [String: Int], rhs r: [String: Int]) -> [String: Int] {
+        var result: [String: Int] = [:]
+        for (key, val) in l {
+            result[key] = val - r[key]!
+        }
+        return result
+    }
+    
+    func multiply(lhs l: Int, rhs r: Int) -> Int {
+        return l * r
+    }
+    
+    func multiply(_ arr: [Int]) -> Int {
+        return arr.reduce(1, *)
+    }
+    
+    func divide(lhs l: Int, rhs r: Int) -> Int {
+        return l / r
+    }
+    
+    func mathOp(lhs l: Int, rhs r: Int, op operation: (Int, Int) -> Int) -> Int {
+        return operation(l, r)
+    }
+    
+    func mathOp(args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int {
+        var result = beg
+        for num in args {
+            result = op(result, num)
+        }
+        return result
+    }
+    
+    func count(_ arr: [Int]) -> Int {
+        return arr.count
+    }
+    
+    func avg(_ arr: [Int]) -> Int {
+        return arr.reduce(0, +) / arr.count
+    }
     
 }
 
@@ -17,7 +86,7 @@ calc.subtract(lhs: 2, rhs: 2) == 0
 calc.multiply(lhs: 2, rhs: 2) == 4
 calc.divide(lhs: 2, rhs: 2) == 1
 
-calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rjs) + (lhs * rhs) }) == 35
+calc.mathOp(lhs: 5, rhs: 5, op: {(lhs: Int, rhs: Int) -> Int in (lhs + rhs) + (lhs * rhs) }) == 35
     // This style is one way of writing an anonymous function
 calc.mathOp(lhs: 10, rhs: -5, op: { ($0 + $1) + ($0 - $1) }) == 20
     // This is the second, more terse, style; either works
